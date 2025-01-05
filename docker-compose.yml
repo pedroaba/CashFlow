@@ -1,0 +1,20 @@
+version: '3.8'
+
+name: cash-flow
+
+services:
+  mysql:
+    image: bitnami/mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_USER=docker
+      - MYSQL_PASSWORD=docker
+      - MYSQL_DATABASE=cashflow
+    volumes:
+      - mysql_data:/bitnami/mysql
+
+volumes:
+  mysql_data:
+    driver: local

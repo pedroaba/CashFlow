@@ -3,6 +3,7 @@ using CashFlow.Api.Middleware;
 using CashFlow.Infrastructure;
 
 using CashFlow.Application;
+using CashFlow.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,4 +30,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
+await MigrateDatabase();
+
 app.Run();
+
+async Task MigrateDatabase()
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    await DatabaseMigration.MigrateDatabase(scope.ServiceProvider);
+}
